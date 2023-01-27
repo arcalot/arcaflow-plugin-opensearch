@@ -1,0 +1,5 @@
+url: OPENSEARCH_URL
+username: OPENSEARCH_USERNAME
+password: OPENSEARCH_PASSWORD
+index: empty-data
+data: {}

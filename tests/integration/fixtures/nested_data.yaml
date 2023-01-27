@@ -1,0 +1,14 @@
+url: OPENSEARCH_URL
+username: OPENSEARCH_USERNAME
+password: OPENSEARCH_PASSWORD
+index: nested-data
+data: {
+  "keyNo3": "Mambo No 3",
+  "nestedKey": {
+    "deeper-nested-1": {
+      "deeper-nested-key": 1,
+      "another-key-deeply-nested": "here I am"
+    }, 
+    "deeper-nested-2": "some value"
+  },
+}
