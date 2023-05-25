@@ -9,6 +9,7 @@ license = "Apache-2.0+GPL-2.0-only"
 python = "^3.9"
 arcaflow-plugin-sdk = "0.9.0"
 opensearch-py = "^2.0.0"
+certifi = "^2023.5.7"
 
 [tool.poetry.dev-dependencies]
 pycodestyle = "^2.9.1"
