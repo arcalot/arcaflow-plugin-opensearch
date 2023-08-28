@@ -76,11 +76,11 @@ Load data into opensearch compatible instance
             </details><details><summary>index (<code>string</code>)</summary>
                 <table><tbody><tr><th>Name:</th><td>index</td></tr><tr><th>Description:</th><td>Name of the index that will receive the data.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td><tr><th>Minimum length:</th><td>1</td></tr></tbody></table>
             </details><details><summary>password (<code>string</code>)</summary>
-                <table><tbody><tr><th>Name:</th><td>The password for the given user.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+                <table><tbody><tr><th>Name:</th><td>password</td></tr><tr><th>Description:</th><td>The password for the given user.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
             </details><details><summary>url (<code>string</code>)</summary>
                 <table><tbody><tr><th>Name:</th><td>url</td></tr><tr><th>Description:</th><td>The URL for the Opensearch-compatible instance.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
             </details><details><summary>username (<code>string</code>)</summary>
-                <table><tbody><tr><th>Name:</th><td>A username for an authorized user for the given Opensearch-compatible instance.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td><tr><th>Minimum length:</th><td>1</td></tr></tbody></table>
+                <table><tbody><tr><th>Name:</th><td>username</td></tr><tr><th>Description:</th><td>A username for an authorized user for the given Opensearch-compatible instance.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td><tr><th>Minimum length:</th><td>1</td></tr></tbody></table>
             </details></td></tr>
 <tr><td colspan="2"><details><summary><strong>Objects</strong></summary><details><summary>StoreDocumentRequest (<code>object</code>)</summary>
             <table><tbody><tr><th>Type:</th><td><code>object</code></td><tr><th>Properties</th><td><details><summary>data (<code>map[<code>string</code>, <code>
@@ -103,11 +103,11 @@ Load data into opensearch compatible instance
         </details><details><summary>index (<code>string</code>)</summary>
         <table><tbody><tr><th>Name:</th><td>index</td></tr><tr><th>Description:</th><td>Name of the index that will receive the data.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td><tr><th>Minimum length:</th><td>1</td></tr></tbody></table>
         </details><details><summary>password (<code>string</code>)</summary>
-        <table><tbody><tr><th>Name:</th><td>The password for the given user.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+        <table><tbody><tr><th>Name:</th><td>password</td></tr><tr><th>Description:</th><td>The password for the given user.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
         </details><details><summary>url (<code>string</code>)</summary>
         <table><tbody><tr><th>Name:</th><td>url</td></tr><tr><th>Description:</th><td>The URL for the Opensearch-compatible instance.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
         </details><details><summary>username (<code>string</code>)</summary>
-        <table><tbody><tr><th>Name:</th><td>A username for an authorized user for the given Opensearch-compatible instance.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td><tr><th>Minimum length:</th><td>1</td></tr></tbody></table>
+        <table><tbody><tr><th>Name:</th><td>username</td></tr><tr><th>Description:</th><td>A username for an authorized user for the given Opensearch-compatible instance.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td><tr><th>Minimum length:</th><td>1</td></tr></tbody></table>
         </details></td></tr>
 </tbody></table>
         </details></details></td></tr>
