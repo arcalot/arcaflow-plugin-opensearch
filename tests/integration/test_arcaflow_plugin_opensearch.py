@@ -27,9 +27,7 @@ class StoreIntegrationTest(unittest.TestCase):
             argv=[
                 "",
                 "-f",
-                StoreIntegrationTest.build_fixture_file_path(
-                    "empty_data.yaml"
-                ),
+                StoreIntegrationTest.build_fixture_file_path("empty_data.yaml"),
             ],
         )
 
@@ -44,9 +42,7 @@ class StoreIntegrationTest(unittest.TestCase):
             argv=[
                 "",
                 "-f",
-                StoreIntegrationTest.build_fixture_file_path(
-                    "simple_data.yaml"
-                ),
+                StoreIntegrationTest.build_fixture_file_path("simple_data.yaml"),
             ],
         )
 
@@ -64,9 +60,7 @@ class StoreIntegrationTest(unittest.TestCase):
             argv=[
                 "",
                 "-f",
-                StoreIntegrationTest.build_fixture_file_path(
-                    "nested_data.yaml"
-                ),
+                StoreIntegrationTest.build_fixture_file_path("nested_data.yaml"),
             ],
         )
 
@@ -94,9 +88,7 @@ class StoreIntegrationTest(unittest.TestCase):
             if len(actualData["hits"]["hits"]) == 0:
                 time.sleep(i + 1)
                 continue
-            self.assertDictEqual(
-                expectedData, actualData["hits"]["hits"][0]["_source"]
-            )
+            self.assertDictEqual(expectedData, actualData["hits"]["hits"][0]["_source"])
             return
         self.fail(f"No documents found for index {index}")
 
@@ -113,9 +105,7 @@ class StoreIntegrationTest(unittest.TestCase):
             "OPENSEARCH_PASSWORD",
         )
         elastiUrl = f"{url}/{sample}/_search"
-        with requests.get(
-            elastiUrl, auth=HTTPBasicAuth(user, password)
-        ) as resp:
+        with requests.get(elastiUrl, auth=HTTPBasicAuth(user, password)) as resp:
             return json.loads(resp.text)
 
 
