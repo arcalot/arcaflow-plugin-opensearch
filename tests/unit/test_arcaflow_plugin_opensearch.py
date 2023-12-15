@@ -33,7 +33,7 @@ class StoreTest(unittest.TestCase):
                 " 'mapper_parsing_exception','failed to parse')"
             )
         )
-    
+
     def test_convert_to_homogeneous_list(self):
         test_cases = [
             ["a", "b", "c"],  # all str
@@ -71,7 +71,6 @@ def validate_list_items_homogeous_type(t, input_list):
     expected_type = type(input_list[0])
     for item in input_list:
         t.assertEqual(type(item), expected_type)
-
 
 
 if __name__ == "__main__":

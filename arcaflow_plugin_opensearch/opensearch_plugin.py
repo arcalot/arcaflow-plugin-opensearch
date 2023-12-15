@@ -21,9 +21,7 @@ def convert_to_supported_type(value) -> typing.Dict:
     elif type_of_val == dict:
         result = {}
         for k in value:
-            result[convert_to_supported_type(k)] = convert_to_supported_type(
-                value[k]
-            )
+            result[convert_to_supported_type(k)] = convert_to_supported_type(value[k])
         return result
     elif type_of_val in (float, int, str, bool):
         return value
@@ -32,6 +30,7 @@ def convert_to_supported_type(value) -> typing.Dict:
     else:
         print("Unknown type", type_of_val, "with val", str(value))
         return str(value)
+
 
 def convert_to_homogenous_list(input_list: list):
     # To make all types in list homogeneous, we upconvert them
@@ -48,6 +47,7 @@ def convert_to_homogenous_list(input_list: list):
         elif type(j) is int and type(list_type) is not float:
             list_type = int()
     return list(map(type(list_type), input_list))
+
 
 @plugin.step(
     id="opensearch",
