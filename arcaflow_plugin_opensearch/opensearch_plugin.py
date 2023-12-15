@@ -39,6 +39,9 @@ def convert_to_homogenous_list(input_list: list):
     # bool + None -> str
     list_type = str()
     for j in input_list:
+        if type(j) is dict:
+            list_type = dict()
+            break
         if type(j) in (str, bool, type(None)):
             list_type = str()
             break
@@ -59,7 +62,7 @@ def store(
     params: StoreDocumentRequest,
 ) -> typing.Tuple[str, typing.Union[SuccessOutput, ErrorOutput]]:
     document = convert_to_supported_type(params.data)
-
+    
     try:
         if params.username:
             opensearch = OpenSearch(
