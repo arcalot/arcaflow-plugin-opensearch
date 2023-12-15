@@ -22,12 +22,15 @@ def store(
         if params.username:
             opensearch = OpenSearch(
                 hosts=params.url,
-                basic_auth=[params.username, params.password],
+                http_auth=(params.username, params.password),
                 verify_certs=params.tls_verify,
             )
         # Support for servers that don't require authentication
         else:
-            opensearch = OpenSearch(hosts=params.url)
+            opensearch = OpenSearch(
+                hosts=params.url,
+                verify_certs=params.tls_verify,
+            )
         resp = opensearch.index(index=params.index, body=params.data)
         if resp["result"] != "created":
             raise Exception(f"Document status: {resp['_shards']}")
