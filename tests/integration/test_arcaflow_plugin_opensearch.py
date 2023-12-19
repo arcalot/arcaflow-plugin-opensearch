@@ -51,6 +51,8 @@ class StoreIntegrationTest(unittest.TestCase):
         expectedData = {
             "keyNo1": "xXx",
             "keyNo2": "Mambo No 5",
+            "mKeyNo1": "squirrel",
+            "mKeyNo2": "Eichhörnchen",
         }
         self.assertStoredData(expectedData, "simple-data")
 
@@ -74,6 +76,12 @@ class StoreIntegrationTest(unittest.TestCase):
                     "another-key-deeply-nested": "here I am",
                 },
                 "deeper-nested-2": "some value",
+            },
+            "mKeyNo1": "squirrel",
+            "mKeyNo2": {
+                "Translations": [
+                    -"Eichhörnchen" - "ardilla" - "écureuil" - "scoiattolo"
+                ]
             },
         }
 

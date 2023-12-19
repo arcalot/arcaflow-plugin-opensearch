@@ -55,10 +55,19 @@ Load data into opensearch compatible instance
 ### Input
 
 <table><tbody>
-<tr><th>Type:</th><td><code>scope</code></td><tr><th>Root object:</th><td>StoreDocumentRequest</td></tr>
-<tr><th>Properties</th><td><details><summary>data (<code>map[<code>string</code>, <code>
+<tr><th>Type:</th><td><code>scope</code></td><tr><th>Root object:</th><td>DocumentRequest</td></tr>
+<tr><th>Properties</th><td><details><summary>bulk_upload_list (<code>list[<code>reference[BulkUploadObject]</code>]</code>)</summary>
+                <table><tbody><tr><th>Name:</th><td>bulk upload list</td></tr><tr><th>Description:</th><td>The list of objects for the bulk upload operation.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>list[<code>reference[BulkUploadObject]</code>]</code></td><tr><td colspan="2">
+    <details>
+        <summary>List items</summary>
+        <table><tbody><tr><th>Type:</th><td><code>reference[BulkUploadObject]</code></td><tr><th>Referenced object:</th><td>BulkUploadObject</td></tr></tbody></table>
+    </details>
+</td></tr></tbody></table>
+            </details><details><summary>default_index (<code>string</code>)</summary>
+                <table><tbody><tr><th>Name:</th><td>index</td></tr><tr><th>Description:</th><td>Name of the default index that will receive the data.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td><tr><th>Minimum length:</th><td>1</td></tr></tbody></table>
+            </details><details><summary>metadata (<code>map[<code>string</code>, <code>
     any</code>]</code>)</summary>
-                <table><tbody><tr><th>Name:</th><td>data</td></tr><tr><th>Description:</th><td>Data to upload to your index</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>map[<code>string</code>, <code>
+                <table><tbody><tr><th>Name:</th><td>metadata</td></tr><tr><th>Description:</th><td>Optional global metadata object that will be added to every document.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>map[<code>string</code>, <code>
     any</code>]</code></td><tr><td colspan="2">
     <details>
         <summary>Key type</summary>
@@ -73,8 +82,6 @@ Load data into opensearch compatible instance
     </details>
 </td></tr>
 </tbody></table>
-            </details><details><summary>index (<code>string</code>)</summary>
-                <table><tbody><tr><th>Name:</th><td>index</td></tr><tr><th>Description:</th><td>Name of the index that will receive the data.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td><tr><th>Minimum length:</th><td>1</td></tr></tbody></table>
             </details><details><summary>password (<code>string</code>)</summary>
                 <table><tbody><tr><th>Name:</th><td>password</td></tr><tr><th>Description:</th><td>The password for the given user.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
             </details><details><summary>tls_verify (<code>bool</code>)</summary>
@@ -84,10 +91,10 @@ Load data into opensearch compatible instance
             </details><details><summary>username (<code>string</code>)</summary>
                 <table><tbody><tr><th>Name:</th><td>username</td></tr><tr><th>Description:</th><td>A username for an authorized user for the given Opensearch-compatible instance.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td><tr><th>Minimum length:</th><td>1</td></tr></tbody></table>
             </details></td></tr>
-<tr><td colspan="2"><details><summary><strong>Objects</strong></summary><details><summary>StoreDocumentRequest (<code>object</code>)</summary>
+<tr><td colspan="2"><details><summary><strong>Objects</strong></summary><details><summary>BulkUploadObject (<code>object</code>)</summary>
             <table><tbody><tr><th>Type:</th><td><code>object</code></td><tr><th>Properties</th><td><details><summary>data (<code>map[<code>string</code>, <code>
     any</code>]</code>)</summary>
-        <table><tbody><tr><th>Name:</th><td>data</td></tr><tr><th>Description:</th><td>Data to upload to your index</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>map[<code>string</code>, <code>
+        <table><tbody><tr><th>Name:</th><td>data</td></tr><tr><th>Description:</th><td>The JSON data document to upload to your index.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>map[<code>string</code>, <code>
     any</code>]</code></td><tr><td colspan="2">
     <details>
         <summary>Key type</summary>
@@ -102,8 +109,49 @@ Load data into opensearch compatible instance
     </details>
 </td></tr>
 </tbody></table>
-        </details><details><summary>index (<code>string</code>)</summary>
-        <table><tbody><tr><th>Name:</th><td>index</td></tr><tr><th>Description:</th><td>Name of the index that will receive the data.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td><tr><th>Minimum length:</th><td>1</td></tr></tbody></table>
+        </details><details><summary>operation (<code>map[<code>string</code>, <code>reference[OperationMeta]</code>]</code>)</summary>
+        <table><tbody><tr><th>Name:</th><td>operation</td></tr><tr><th>Description:</th><td>The operation type and associated operation metadata.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>map[<code>string</code>, <code>reference[OperationMeta]</code>]</code></td><tr><td colspan="2">
+    <details>
+        <summary>Key type</summary>
+        <table><tbody><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+    </details>
+</td></tr>
+<tr><td colspan="2">
+    <details>
+        <summary>Value type</summary>
+        <table><tbody><tr><th>Type:</th><td><code>reference[OperationMeta]</code></td><tr><th>Referenced object:</th><td>OperationMeta</td></tr></tbody></table>
+    </details>
+</td></tr>
+</tbody></table>
+        </details></td></tr>
+</tbody></table>
+        </details><details><summary>DocumentRequest (<code>object</code>)</summary>
+            <table><tbody><tr><th>Type:</th><td><code>object</code></td><tr><th>Properties</th><td><details><summary>bulk_upload_list (<code>list[<code>reference[BulkUploadObject]</code>]</code>)</summary>
+        <table><tbody><tr><th>Name:</th><td>bulk upload list</td></tr><tr><th>Description:</th><td>The list of objects for the bulk upload operation.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>list[<code>reference[BulkUploadObject]</code>]</code></td><tr><td colspan="2">
+    <details>
+        <summary>List items</summary>
+        <table><tbody><tr><th>Type:</th><td><code>reference[BulkUploadObject]</code></td><tr><th>Referenced object:</th><td>BulkUploadObject</td></tr></tbody></table>
+    </details>
+</td></tr></tbody></table>
+        </details><details><summary>default_index (<code>string</code>)</summary>
+        <table><tbody><tr><th>Name:</th><td>index</td></tr><tr><th>Description:</th><td>Name of the default index that will receive the data.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td><tr><th>Minimum length:</th><td>1</td></tr></tbody></table>
+        </details><details><summary>metadata (<code>map[<code>string</code>, <code>
+    any</code>]</code>)</summary>
+        <table><tbody><tr><th>Name:</th><td>metadata</td></tr><tr><th>Description:</th><td>Optional global metadata object that will be added to every document.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>map[<code>string</code>, <code>
+    any</code>]</code></td><tr><td colspan="2">
+    <details>
+        <summary>Key type</summary>
+        <table><tbody><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+    </details>
+</td></tr>
+<tr><td colspan="2">
+    <details>
+        <summary>Value type</summary>
+        <table><tbody><tr><th>Type:</th><td><code>
+    any</code></td></tbody></table>
+    </details>
+</td></tr>
+</tbody></table>
         </details><details><summary>password (<code>string</code>)</summary>
         <table><tbody><tr><th>Name:</th><td>password</td></tr><tr><th>Description:</th><td>The password for the given user.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
         </details><details><summary>tls_verify (<code>bool</code>)</summary>
@@ -112,6 +160,13 @@ Load data into opensearch compatible instance
         <table><tbody><tr><th>Name:</th><td>url</td></tr><tr><th>Description:</th><td>The URL for the Opensearch-compatible instance.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
         </details><details><summary>username (<code>string</code>)</summary>
         <table><tbody><tr><th>Name:</th><td>username</td></tr><tr><th>Description:</th><td>A username for an authorized user for the given Opensearch-compatible instance.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td><tr><th>Minimum length:</th><td>1</td></tr></tbody></table>
+        </details></td></tr>
+</tbody></table>
+        </details><details><summary>OperationMeta (<code>object</code>)</summary>
+            <table><tbody><tr><th>Type:</th><td><code>object</code></td><tr><th>Properties</th><td><details><summary>_id (<code>string</code>)</summary>
+        <table><tbody><tr><th>Name:</th><td>ID</td></tr><tr><th>Description:</th><td>Optional ID for the data document.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+        </details><details><summary>_index (<code>string</code>)</summary>
+        <table><tbody><tr><th>Name:</th><td>index</td></tr><tr><th>Description:</th><td>Optional name of the index that will receive the data. If none is provided, the default index will be used.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
         </details></td></tr>
 </tbody></table>
         </details></details></td></tr>
@@ -139,12 +194,182 @@ Load data into opensearch compatible instance
 
 <table><tbody>
 <tr><th>Type:</th><td><code>scope</code></td><tr><th>Root object:</th><td>SuccessOutput</td></tr>
-<tr><th>Properties</th><td><details><summary>message (<code>string</code>)</summary>
+<tr><th>Properties</th><td><details><summary>document_ids (<code>list[<code>string</code>]</code>)</summary>
+                <table><tbody><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>list[<code>string</code>]</code></td><tr><td colspan="2">
+    <details>
+        <summary>List items</summary>
+        <table><tbody><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+    </details>
+</td></tr></tbody></table>
+            </details><details><summary>message (<code>string</code>)</summary>
                 <table><tbody><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
             </details></td></tr>
 <tr><td colspan="2"><details><summary><strong>Objects</strong></summary><details><summary>SuccessOutput (<code>object</code>)</summary>
-            <table><tbody><tr><th>Type:</th><td><code>object</code></td><tr><th>Properties</th><td><details><summary>message (<code>string</code>)</summary>
+            <table><tbody><tr><th>Type:</th><td><code>object</code></td><tr><th>Properties</th><td><details><summary>document_ids (<code>list[<code>string</code>]</code>)</summary>
+        <table><tbody><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>list[<code>string</code>]</code></td><tr><td colspan="2">
+    <details>
+        <summary>List items</summary>
+        <table><tbody><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+    </details>
+</td></tr></tbody></table>
+        </details><details><summary>message (<code>string</code>)</summary>
         <table><tbody><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+        </details></td></tr>
+</tbody></table>
+        </details></details></td></tr>
+</tbody></table>
+
+
+
+## Process List (`process_list`)
+
+Process list input into a bulk_upload_list
+
+### Input
+
+<table><tbody>
+<tr><th>Type:</th><td><code>scope</code></td><tr><th>Root object:</th><td>DataList</td></tr>
+<tr><th>Properties</th><td><details><summary>data_list (<code>list[<code>
+    any</code>]</code>)</summary>
+                <table><tbody><tr><th>Name:</th><td>data list</td></tr><tr><th>Description:</th><td>List of data object to process into the bulk_upload_list.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>list[<code>
+    any</code>]</code></td><tr><td colspan="2">
+    <details>
+        <summary>List items</summary>
+        <table><tbody><tr><th>Type:</th><td><code>
+    any</code></td></tbody></table>
+    </details>
+</td></tr></tbody></table>
+            </details><details><summary>operation (<code>map[<code>string</code>, <code>reference[OperationMeta]</code>]</code>)</summary>
+                <table><tbody><tr><th>Name:</th><td>operation</td></tr><tr><th>Description:</th><td>The operation type and associated operation metadata.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>map[<code>string</code>, <code>reference[OperationMeta]</code>]</code></td><tr><td colspan="2">
+    <details>
+        <summary>Key type</summary>
+        <table><tbody><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+    </details>
+</td></tr>
+<tr><td colspan="2">
+    <details>
+        <summary>Value type</summary>
+        <table><tbody><tr><th>Type:</th><td><code>reference[OperationMeta]</code></td><tr><th>Referenced object:</th><td>OperationMeta</td></tr></tbody></table>
+    </details>
+</td></tr>
+</tbody></table>
+            </details></td></tr>
+<tr><td colspan="2"><details><summary><strong>Objects</strong></summary><details><summary>DataList (<code>object</code>)</summary>
+            <table><tbody><tr><th>Type:</th><td><code>object</code></td><tr><th>Properties</th><td><details><summary>data_list (<code>list[<code>
+    any</code>]</code>)</summary>
+        <table><tbody><tr><th>Name:</th><td>data list</td></tr><tr><th>Description:</th><td>List of data object to process into the bulk_upload_list.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>list[<code>
+    any</code>]</code></td><tr><td colspan="2">
+    <details>
+        <summary>List items</summary>
+        <table><tbody><tr><th>Type:</th><td><code>
+    any</code></td></tbody></table>
+    </details>
+</td></tr></tbody></table>
+        </details><details><summary>operation (<code>map[<code>string</code>, <code>reference[OperationMeta]</code>]</code>)</summary>
+        <table><tbody><tr><th>Name:</th><td>operation</td></tr><tr><th>Description:</th><td>The operation type and associated operation metadata.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>map[<code>string</code>, <code>reference[OperationMeta]</code>]</code></td><tr><td colspan="2">
+    <details>
+        <summary>Key type</summary>
+        <table><tbody><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+    </details>
+</td></tr>
+<tr><td colspan="2">
+    <details>
+        <summary>Value type</summary>
+        <table><tbody><tr><th>Type:</th><td><code>reference[OperationMeta]</code></td><tr><th>Referenced object:</th><td>OperationMeta</td></tr></tbody></table>
+    </details>
+</td></tr>
+</tbody></table>
+        </details></td></tr>
+</tbody></table>
+        </details><details><summary>OperationMeta (<code>object</code>)</summary>
+            <table><tbody><tr><th>Type:</th><td><code>object</code></td><tr><th>Properties</th><td><details><summary>_id (<code>string</code>)</summary>
+        <table><tbody><tr><th>Name:</th><td>ID</td></tr><tr><th>Description:</th><td>Optional ID for the data document.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+        </details><details><summary>_index (<code>string</code>)</summary>
+        <table><tbody><tr><th>Name:</th><td>index</td></tr><tr><th>Description:</th><td>Optional name of the index that will receive the data. If none is provided, the default index will be used.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+        </details></td></tr>
+</tbody></table>
+        </details></details></td></tr>
+</tbody></table>
+
+### Outputs
+
+
+#### error
+
+<table><tbody>
+<tr><th>Type:</th><td><code>scope</code></td><tr><th>Root object:</th><td>ErrorOutput</td></tr>
+<tr><th>Properties</th><td><details><summary>error (<code>string</code>)</summary>
+                <table><tbody><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+            </details></td></tr>
+<tr><td colspan="2"><details><summary><strong>Objects</strong></summary><details><summary>ErrorOutput (<code>object</code>)</summary>
+            <table><tbody><tr><th>Type:</th><td><code>object</code></td><tr><th>Properties</th><td><details><summary>error (<code>string</code>)</summary>
+        <table><tbody><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+        </details></td></tr>
+</tbody></table>
+        </details></details></td></tr>
+</tbody></table>
+
+#### success
+
+<table><tbody>
+<tr><th>Type:</th><td><code>scope</code></td><tr><th>Root object:</th><td>BulkUploadList</td></tr>
+<tr><th>Properties</th><td><details><summary>bulk_upload_list (<code>list[<code>reference[BulkUploadObject]</code>]</code>)</summary>
+                <table><tbody><tr><th>Name:</th><td>bulk upload list</td></tr><tr><th>Description:</th><td>The list of objects for the bulk upload operation.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>list[<code>reference[BulkUploadObject]</code>]</code></td><tr><td colspan="2">
+    <details>
+        <summary>List items</summary>
+        <table><tbody><tr><th>Type:</th><td><code>reference[BulkUploadObject]</code></td><tr><th>Referenced object:</th><td>BulkUploadObject</td></tr></tbody></table>
+    </details>
+</td></tr></tbody></table>
+            </details></td></tr>
+<tr><td colspan="2"><details><summary><strong>Objects</strong></summary><details><summary>BulkUploadList (<code>object</code>)</summary>
+            <table><tbody><tr><th>Type:</th><td><code>object</code></td><tr><th>Properties</th><td><details><summary>bulk_upload_list (<code>list[<code>reference[BulkUploadObject]</code>]</code>)</summary>
+        <table><tbody><tr><th>Name:</th><td>bulk upload list</td></tr><tr><th>Description:</th><td>The list of objects for the bulk upload operation.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>list[<code>reference[BulkUploadObject]</code>]</code></td><tr><td colspan="2">
+    <details>
+        <summary>List items</summary>
+        <table><tbody><tr><th>Type:</th><td><code>reference[BulkUploadObject]</code></td><tr><th>Referenced object:</th><td>BulkUploadObject</td></tr></tbody></table>
+    </details>
+</td></tr></tbody></table>
+        </details></td></tr>
+</tbody></table>
+        </details><details><summary>BulkUploadObject (<code>object</code>)</summary>
+            <table><tbody><tr><th>Type:</th><td><code>object</code></td><tr><th>Properties</th><td><details><summary>data (<code>map[<code>string</code>, <code>
+    any</code>]</code>)</summary>
+        <table><tbody><tr><th>Name:</th><td>data</td></tr><tr><th>Description:</th><td>The JSON data document to upload to your index.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>map[<code>string</code>, <code>
+    any</code>]</code></td><tr><td colspan="2">
+    <details>
+        <summary>Key type</summary>
+        <table><tbody><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+    </details>
+</td></tr>
+<tr><td colspan="2">
+    <details>
+        <summary>Value type</summary>
+        <table><tbody><tr><th>Type:</th><td><code>
+    any</code></td></tbody></table>
+    </details>
+</td></tr>
+</tbody></table>
+        </details><details><summary>operation (<code>map[<code>string</code>, <code>reference[OperationMeta]</code>]</code>)</summary>
+        <table><tbody><tr><th>Name:</th><td>operation</td></tr><tr><th>Description:</th><td>The operation type and associated operation metadata.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>map[<code>string</code>, <code>reference[OperationMeta]</code>]</code></td><tr><td colspan="2">
+    <details>
+        <summary>Key type</summary>
+        <table><tbody><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+    </details>
+</td></tr>
+<tr><td colspan="2">
+    <details>
+        <summary>Value type</summary>
+        <table><tbody><tr><th>Type:</th><td><code>reference[OperationMeta]</code></td><tr><th>Referenced object:</th><td>OperationMeta</td></tr></tbody></table>
+    </details>
+</td></tr>
+</tbody></table>
+        </details></td></tr>
+</tbody></table>
+        </details><details><summary>OperationMeta (<code>object</code>)</summary>
+            <table><tbody><tr><th>Type:</th><td><code>object</code></td><tr><th>Properties</th><td><details><summary>_id (<code>string</code>)</summary>
+        <table><tbody><tr><th>Name:</th><td>ID</td></tr><tr><th>Description:</th><td>Optional ID for the data document.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+        </details><details><summary>_index (<code>string</code>)</summary>
+        <table><tbody><tr><th>Name:</th><td>index</td></tr><tr><th>Description:</th><td>Optional name of the index that will receive the data. If none is provided, the default index will be used.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
         </details></td></tr>
 </tbody></table>
         </details></details></td></tr>

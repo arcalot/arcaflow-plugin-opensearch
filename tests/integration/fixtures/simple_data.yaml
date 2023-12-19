@@ -1,8 +1,21 @@
 url: OPENSEARCH_URL
 username: OPENSEARCH_USERNAME
 password: OPENSEARCH_PASSWORD
-index: simple-data
-data: {
-  "keyNo1": "xXx",
-  "keyNo2": "Mambo No 5",
+default_index: simple-data
+metadata: {
+  "mKeyNo1": "squirrel",
+  "mKeyNo2": "Eichhörnchen",
 }
+bulk_upload_list:
+  - operation:
+      index: {}
+    data: {
+      "keyNo1": "xXx",
+      "keyNo2": "Mambo No 5",
+    }
+  - operation:
+      create: {}
+    data: {
+      "keyNo1": "yYy",
+      "keyNo2": "Mambo No 6",
+    }

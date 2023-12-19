@@ -1,14 +1,30 @@
 url: OPENSEARCH_URL
 username: OPENSEARCH_USERNAME
 password: OPENSEARCH_PASSWORD
-index: nested-data
-data: {
-  "keyNo3": "Mambo No 3",
-  "nestedKey": {
-    "deeper-nested-1": {
-      "deeper-nested-key": 1,
-      "another-key-deeply-nested": "here I am"
-    }, 
-    "deeper-nested-2": "some value"
-  },
+default_index: nested-data
+metadata: {
+  "mKeyNo1": "squirrel",
+  "mKeyNo2": {
+    "Translations": [
+      - "Eichhörnchen"
+      - "ardilla"
+      - "écureuil"
+      - "scoiattolo"
+    ]
+  }
 }
+bulk_upload_list:
+  - operation:
+      index:
+        _index: nested-data
+        _id: abc123def
+    data: {
+      "keyNo3": "Mambo No 3",
+      "nestedKey": {
+        "deeper-nested-1": {
+          "deeper-nested-key": 1,
+          "another-key-deeply-nested": "here I am"
+        }, 
+        "deeper-nested-2": "some value"
+      },
+    }

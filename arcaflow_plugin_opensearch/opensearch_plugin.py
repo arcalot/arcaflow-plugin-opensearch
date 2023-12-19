@@ -2,54 +2,33 @@
 
 import sys
 import typing
-
 from opensearchpy import OpenSearch
 
 from arcaflow_plugin_sdk import plugin
-from opensearch_schema import ErrorOutput, SuccessOutput, StoreDocumentRequest
+from opensearch_schema import (
+    ErrorOutput,
+    SuccessOutput,
+    BulkUploadList,
+    BulkUploadObject,
+    DocumentRequest,
+    DataList,
+    bulk_upload_object_schema,
+)
 
 
-def convert_to_supported_type(value) -> typing.Dict:
-    type_of_val = type(value)
-    if type_of_val == list:
-        new_list = []
-        for i in value:
-            new_list.append(convert_to_supported_type(i))
-        # A list needs to be of a consistent type or it will
-        # not be indexible into a system like Opensearch
-        return convert_to_homogenous_list(new_list)
-    elif type_of_val == dict:
-        result = {}
-        for k in value:
-            result[convert_to_supported_type(k)] = convert_to_supported_type(value[k])
-        return result
-    elif type_of_val in (float, int, str, bool):
-        return value
-    elif isinstance(type_of_val, type(None)):
-        return str("")
-    else:
-        print("Unknown type", type_of_val, "with val", str(value))
-        return str(value)
-
-
-def convert_to_homogenous_list(input_list: list):
-    # To make all types in list homogeneous, we upconvert them
-    # to the least commom type.
-    # int -> float -> str
-    # bool + None -> str
-    list_type = str()
-    for j in input_list:
-        if type(j) is dict:
-            list_type = dict()
-            break
-        if type(j) in (str, bool, type(None)):
-            list_type = str()
-            break
-        elif type(j) is float:
-            list_type = float()
-        elif type(j) is int and type(list_type) is not float:
-            list_type = int()
-    return list(map(type(list_type), input_list))
+@plugin.step(
+    id="process_list",
+    name="Process List",
+    description="Process list input into a bulk_upload_list",
+    outputs={"success": BulkUploadList, "error": ErrorOutput},
+)
+def process_list(
+    params: DataList,
+) -> typing.Tuple[str, typing.Union[BulkUploadList, ErrorOutput]]:
+    bulk_upload_list = []
+    for item in params.data_list:
+        bulk_upload_list.append(BulkUploadObject(params.operation, item))
+    return "success", BulkUploadList(bulk_upload_list)
 
 
 @plugin.step(
@@ -59,36 +38,73 @@ def convert_to_homogenous_list(input_list: list):
     outputs={"success": SuccessOutput, "error": ErrorOutput},
 )
 def store(
-    params: StoreDocumentRequest,
+    params: DocumentRequest,
 ) -> typing.Tuple[str, typing.Union[SuccessOutput, ErrorOutput]]:
-    document = convert_to_supported_type(params.data)
-    
-    try:
-        if params.username:
-            opensearch = OpenSearch(
-                hosts=params.url,
-                http_auth=(params.username, params.password),
-                verify_certs=params.tls_verify,
-            )
-        # Support for servers that don't require authentication
-        else:
-            opensearch = OpenSearch(
-                hosts=params.url,
-                verify_certs=params.tls_verify,
-            )
-        resp = opensearch.index(
-            index=params.index,
-            body=document,
+    """
+    The payload for the bulk upload function requires a list of objects,
+    alternating such that the odd objects provide the Opensearch operation
+    and operation metadata, and the even objects provide the JSON document
+    to be uploaded using the operation from the previous object. Example:
+
+    [
+        {"create": {"_index": "myindex", "_id": "<id>"}},
+        {"A JSON": "document"},
+        {"index": {"_index": "myindex", "_id": "<id>"}},
+        {"A JSON": "document"},
+        {"delete": {"_index": "myindex", "_id": "<id>"}},
+        {"A JSON": "document"},
+    ]
+    """
+
+    def process_bulk_list_generator():
+        for i in params.bulk_upload_list:
+            # Create the operation and data document from the list
+            item = list(bulk_upload_object_schema.serialize(i).values())
+            operation = item[0]
+            yield operation
+            doc = item[1]
+            # Append the global metadata to the document
+            if params.metadata:
+                doc["metadata"] = params.metadata
+            yield doc
+
+    if params.username:
+        connection = OpenSearch(
+            hosts=params.url,
+            http_auth=(params.username, params.password),
+            verify_certs=params.tls_verify,
         )
-        if resp["result"] != "created":
-            raise Exception(f"Document status: {resp['_shards']}")
+    # Support for servers that don't require authentication
+    else:
+        connection = OpenSearch(
+            hosts=params.url,
+            verify_certs=params.tls_verify,
+        )
+
+    try:
+        resp = connection.bulk(
+            body=process_bulk_list_generator(),
+            index=params.default_index,
+        )
+
+        if resp["errors"]:
+            shards = {}
+            for i in resp["items"]:
+                shards[list(i.values())[0]["_id"]] = list(i.values())[0]["_shards"]
+            raise Exception(f"Document status: {str(shards)}")
+
+        ids = []
+        for i in resp["items"]:
+            ids.append(list(i.values())[0]["_id"])
 
         return "success", SuccessOutput(
-            f"Successfully uploaded document for index {params.index}"
+            "Successfully uploaded document(s).",
+            ids,
         )
+
     except Exception as ex:
-        return "error", ErrorOutput(f"Failed to create OpenSearch document: {ex}")
+        return "error", ErrorOutput(f"Failed to create OpenSearch document(s): {ex}")
 
 
 if __name__ == "__main__":
-    sys.exit(plugin.run(plugin.build_schema(store)))
+    sys.exit(plugin.run(plugin.build_schema(store, process_list)))
