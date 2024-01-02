@@ -77,6 +77,8 @@ Load data into opensearch compatible instance
                 <table><tbody><tr><th>Name:</th><td>index</td></tr><tr><th>Description:</th><td>Name of the index that will receive the data.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td><tr><th>Minimum length:</th><td>1</td></tr></tbody></table>
             </details><details><summary>password (<code>string</code>)</summary>
                 <table><tbody><tr><th>Name:</th><td>password</td></tr><tr><th>Description:</th><td>The password for the given user.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+            </details><details><summary>tls_verify (<code>bool</code>)</summary>
+                <table><tbody><tr><th>Name:</th><td>TLS verify</td></tr><tr><th>Description:</th><td>For development and testing purposes, this can be set to False to disable TLS verification for connections to Opensearch-compatible services.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Default (JSON encoded):</th><td><pre><code>true</code></pre></td></tr><tr><th>Type:</th><td><code>bool</code></td></tbody></table>
             </details><details><summary>url (<code>string</code>)</summary>
                 <table><tbody><tr><th>Name:</th><td>url</td></tr><tr><th>Description:</th><td>The URL for the Opensearch-compatible instance.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
             </details><details><summary>username (<code>string</code>)</summary>
@@ -104,6 +106,8 @@ Load data into opensearch compatible instance
         <table><tbody><tr><th>Name:</th><td>index</td></tr><tr><th>Description:</th><td>Name of the index that will receive the data.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td><tr><th>Minimum length:</th><td>1</td></tr></tbody></table>
         </details><details><summary>password (<code>string</code>)</summary>
         <table><tbody><tr><th>Name:</th><td>password</td></tr><tr><th>Description:</th><td>The password for the given user.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
+        </details><details><summary>tls_verify (<code>bool</code>)</summary>
+        <table><tbody><tr><th>Name:</th><td>TLS verify</td></tr><tr><th>Description:</th><td>For development and testing purposes, this can be set to False to disable TLS verification for connections to Opensearch-compatible services.</td></tr><tr><th>Required:</th><td>No</td></tr><tr><th>Default (JSON encoded):</th><td><pre><code>true</code></pre></td></tr><tr><th>Type:</th><td><code>bool</code></td></tbody></table>
         </details><details><summary>url (<code>string</code>)</summary>
         <table><tbody><tr><th>Name:</th><td>url</td></tr><tr><th>Description:</th><td>The URL for the Opensearch-compatible instance.</td></tr><tr><th>Required:</th><td>Yes</td></tr><tr><th>Type:</th><td><code>string</code></td></tbody></table>
         </details><details><summary>username (<code>string</code>)</summary>
