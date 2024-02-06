@@ -13,11 +13,11 @@ packages = [
 python = "^3.9"
 arcaflow-plugin-sdk = "0.13.0"
 opensearch-py = "^2.0.0"
-certifi = "^2023.5.7"
+certifi = "^2024.0.0"
 
 [tool.poetry.dev-dependencies]
 pycodestyle = "^2.9.1"
-black = "^23.0.0"
+black = "^24.0.0"
 pydocstyle = "^6.1.1"
 docformatter = "^1.5.0"
 autoflake = "^2.0.0"
