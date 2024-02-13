@@ -1,5 +1,9 @@
 url: OPENSEARCH_URL
 username: OPENSEARCH_USERNAME
 password: OPENSEARCH_PASSWORD
-index: empty-data
-data: {}
+default_index: empty-data
+metadata: {}
+bulk_upload_list:
+  - operation:
+      index: {}
+    data: {}

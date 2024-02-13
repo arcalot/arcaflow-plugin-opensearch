@@ -2,11 +2,33 @@
 
 import sys
 import typing
-
 from opensearchpy import OpenSearch
 
 from arcaflow_plugin_sdk import plugin
-from opensearch_schema import ErrorOutput, SuccessOutput, StoreDocumentRequest
+from opensearch_schema import (
+    ErrorOutput,
+    SuccessOutput,
+    BulkUploadList,
+    BulkUploadObject,
+    DocumentRequest,
+    DataList,
+    bulk_upload_object_schema,
+)
+
+
+@plugin.step(
+    id="process_list",
+    name="Process List",
+    description="Process list input into a bulk_upload_list",
+    outputs={"success": BulkUploadList, "error": ErrorOutput},
+)
+def process_list(
+    params: DataList,
+) -> typing.Tuple[str, typing.Union[BulkUploadList, ErrorOutput]]:
+    bulk_upload_list = []
+    for item in params.data_list:
+        bulk_upload_list.append(BulkUploadObject(params.operation, item))
+    return "success", BulkUploadList(bulk_upload_list)
 
 
 @plugin.step(
@@ -16,29 +38,66 @@ from opensearch_schema import ErrorOutput, SuccessOutput, StoreDocumentRequest
     outputs={"success": SuccessOutput, "error": ErrorOutput},
 )
 def store(
-    params: StoreDocumentRequest,
+    params: DocumentRequest,
 ) -> typing.Tuple[str, typing.Union[SuccessOutput, ErrorOutput]]:
+    """
+    The payload for the bulk upload function requires a list of objects,
+    alternating such that the odd objects provide the Opensearch operation
+    and operation metadata, and the even objects provide the JSON document
+    to be uploaded using the operation from the previous object. Example:
+
+    [
+        {"create": {"_index": "myindex", "_id": "<id>"}},
+        {"A JSON": "document"},
+        {"index": {"_index": "myindex", "_id": "<id>"}},
+        {"A JSON": "document"},
+        {"delete": {"_index": "myindex", "_id": "<id>"}},
+        {"A JSON": "document"},
+    ]
+    """
+
+    def process_bulk_list_generator():
+        for i in params.bulk_upload_list:
+            # Create the operation and data document from the list
+            item = iter(bulk_upload_object_schema.serialize(i).values())
+            operation = next(item)
+            yield operation
+            doc = next(item)
+            # Append the global metadata to the document
+            if params.metadata:
+                doc["metadata"] = params.metadata
+            yield doc
+
+    os_args = {"hosts": params.url, "verify_certs": params.tls_verify}
+    if params.username:
+        # Specify username/password if provided
+        os_args["http_auth"] = (params.username, params.password)
+    connection = OpenSearch(**os_args)
 
     try:
-        if params.username:
-            opensearch = OpenSearch(
-                hosts=params.url, basic_auth=[params.username, params.password]
-            )
-        # Support for servers that don't require authentication
-        else:
-            opensearch = OpenSearch(hosts=params.url)
-        resp = opensearch.index(index=params.index, body=params.data)
-        if resp["result"] != "created":
-            raise Exception(f"Document status: {resp['_shards']}")
+        resp = connection.bulk(
+            body=process_bulk_list_generator(),
+            index=params.default_index,
+        )
+
+        if resp["errors"]:
+            shards = {}
+            for i in resp["items"]:
+                e = next(iter(i.values()))
+                shards[e["_id"]] = e["_shards"]
+
+        ids = []
+        for i in resp["items"]:
+            ids.append(list(i.values())[0]["_id"])
 
         return "success", SuccessOutput(
-            f"Successfully uploaded document for index {params.index}"
+            "Successfully uploaded document(s).",
+            ids,
         )
+
     except Exception as ex:
-        return "error", ErrorOutput(
-            f"Failed to create OpenSearch document: {ex}"
-        )
+        return "error", ErrorOutput(f"Failed to create OpenSearch document(s): {ex}")
 
 
 if __name__ == "__main__":
-    sys.exit(plugin.run(plugin.build_schema(store)))
+    sys.exit(plugin.run(plugin.build_schema(store, process_list)))

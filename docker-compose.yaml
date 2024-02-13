@@ -29,9 +29,9 @@ services:
       - ELASTICSEARCH_URL=http://elasticsearch.integration:9200
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=topsecret
-    command: "-f /configs/opensearch_example.yaml"
+    command: "-s opensearch -f /inputs/opensearch_example.yaml"
     volumes:
-      - ./configs:/configs:Z
+      - ./inputs:/inputs:Z
     depends_on: 
       elasticsearch-integration: 
         condition: service_healthy

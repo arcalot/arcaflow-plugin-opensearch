@@ -1,0 +1,21 @@
+# Default Docker network IP
+url: "http://localhost:9200"
+# username: "elastic"
+# password: "topsecret"
+default_index: "myindex"
+tls_verify: False
+metadata:
+  meta1: "metadata value 1"
+  meta2: "metadata value 2"
+bulk_upload_list:
+  - operation:
+      index:
+        _index: "myotherindex"
+    data:
+      key1: "item 1 data value 1"
+      key2: "item 1 data value 2"
+  - operation:
+      create: {}
+    data:
+      key1: "item 2 data value 1"
+      key2: "item 2 data value 2"
