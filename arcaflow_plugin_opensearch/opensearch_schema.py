@@ -78,7 +78,7 @@ class DocumentRequest(BulkUploadList):
         typing.Optional[typing.Dict[str, typing.Any]],
         schema.name("metadata"),
         schema.description(
-            "Optional global metadata object that will be added " "to every document."
+            "Optional global metadata object that will be added to every document."
         ),
     ] = None
     username: typing.Annotated[

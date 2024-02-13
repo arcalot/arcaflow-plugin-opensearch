@@ -59,27 +59,20 @@ def store(
     def process_bulk_list_generator():
         for i in params.bulk_upload_list:
             # Create the operation and data document from the list
-            item = list(bulk_upload_object_schema.serialize(i).values())
-            operation = item[0]
+            item = iter(bulk_upload_object_schema.serialize(i).values())
+            operation = next(item)
             yield operation
-            doc = item[1]
+            doc = next(item)
             # Append the global metadata to the document
             if params.metadata:
                 doc["metadata"] = params.metadata
             yield doc
 
+    os_args = {"hosts": params.url, "verify_certs": params.tls_verify}
     if params.username:
-        connection = OpenSearch(
-            hosts=params.url,
-            http_auth=(params.username, params.password),
-            verify_certs=params.tls_verify,
-        )
-    # Support for servers that don't require authentication
-    else:
-        connection = OpenSearch(
-            hosts=params.url,
-            verify_certs=params.tls_verify,
-        )
+        # Specify username/password if provided
+        os_args["http_auth"] = (params.username, params.password)
+    connection = OpenSearch(**os_args)
 
     try:
         resp = connection.bulk(
@@ -90,8 +83,8 @@ def store(
         if resp["errors"]:
             shards = {}
             for i in resp["items"]:
-                shards[list(i.values())[0]["_id"]] = list(i.values())[0]["_shards"]
-            raise Exception(f"Document status: {str(shards)}")
+                e = next(iter(i.values()))
+                shards[e["_id"]] = e["_shards"]
 
         ids = []
         for i in resp["items"]:
