@@ -12,9 +12,9 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
       - name: Build image
-        run: docker-compose build 
+        run: docker compose build
       - name: Run plugin
-        run: docker-compose up --abort-on-container-exit
+        run: docker compose up --abort-on-container-exit
       - name: Extract coverage data
         run: |
           docker create --name test quay.io/arcalot/arcaflow-plugin-opensearch:latest
