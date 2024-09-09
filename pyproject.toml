@@ -16,7 +16,7 @@ opensearch-py = "^2.0.0"
 certifi = "^2024.0.0"
 # workaround for: https://github.com/python-poetry/poetry-plugin-export/issues/183
 # required until Python 3.10: https://github.com/opensearch-project/opensearch-py/blob/a24b9f3f3cccd779ef0d9b1161ce8ce518717d10/setup.py#L57-L58
-urllib3 = ">=1.25.4,<1.27"
+urllib3 = ">=2.2.2,<2.3"
 
 [tool.poetry.dev-dependencies]
 pycodestyle = "^2.9.1"
