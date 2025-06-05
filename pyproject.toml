@@ -16,14 +16,14 @@ opensearch-py = "^2.0.0"
 certifi = "^2025.0.0"
 # workaround for: https://github.com/python-poetry/poetry-plugin-export/issues/183
 # required until Python 3.10: https://github.com/opensearch-project/opensearch-py/blob/a24b9f3f3cccd779ef0d9b1161ce8ce518717d10/setup.py#L57-L58
-urllib3 = ">=1.25.4,<1.27"
+urllib3 = ">=2.4,<2.5"
 
 [tool.poetry.dev-dependencies]
-pycodestyle = "^2.9.1"
-black = "^24.0.0"
-pydocstyle = "^6.1.1"
-docformatter = "^1.5.0"
-autoflake = "^2.0.0"
+pycodestyle = "2.12.1"
+black = "24.10.0"
+pydocstyle = "6.3.0"
+docformatter = "1.7.5"
+autoflake = "2.3.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
