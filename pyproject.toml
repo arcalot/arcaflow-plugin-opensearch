@@ -17,7 +17,7 @@ certifi = "^2025.0.0"
 
 [tool.poetry.dev-dependencies]
 pycodestyle = "2.14.0"
-black = "24.10.0"
+black = "25.1.0"
 pydocstyle = "6.3.0"
 docformatter = "1.7.7"
 autoflake = "2.3.1"
